@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: "Simple Kind";
+    src: url(../assets/fonts/Simple-kind.ttf);
+}
+
+body{
+    font-family: "Simple Kind", sans-serif;
+    background-color: #EFEFEF;
+}
