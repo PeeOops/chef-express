@@ -5,7 +5,22 @@
     src: url(../assets/fonts/Simple-kind.ttf);
 }
 
+:root{
+    --forest-green: '#3F7D58';
+    --soft-gray: '#EFEFEF';
+    --sunset-orange: '#EF9651';
+    --burnt-coral: '#EC5228',;
+}
+
 body{
     font-family: "Simple Kind", sans-serif;
-    background-color: #EFEFEF;
+    background-color: var(--soft-gray);
+}
+
+.text-forestGreen{
+    color: var(--forest-green);
+}
+
+.t-sunsetOrange{
+    color: var(--sunset-orange);
 }
