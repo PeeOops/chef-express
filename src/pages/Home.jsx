@@ -54,8 +54,8 @@ const Home = () => {
             <div className="flex flex-row items-center place-content-evenly mt-4 mx-24 p-2 bg-amber-600 shadow-gray-600 shadow-md rounded-md font-bold overflow-auto">
                 <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1">All</p>
                 {
-                    category.map((meal, index) => (
-                        <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1" key={index} >{meal.strCategory}</p>
+                    category.map((meal) => (
+                        <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1" key={meal.strCategory} >{meal.strCategory}</p>
                     ))
                 }
             </div>
