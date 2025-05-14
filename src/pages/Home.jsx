@@ -51,14 +51,20 @@ const Home = () => {
                 </div>
             </section>
             {/* Filters */}
-            <div className="flex flex-row items-center place-content-evenly mt-4 mx-24 p-2 bg-amber-600 shadow-gray-600 shadow-md rounded-md font-bold overflow-auto">
-                <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1">All</p>
-                {
-                    category.map((meal) => (
-                        <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1" key={meal.strCategory} >{meal.strCategory}</p>
-                    ))
-                }
+            <div className="flex overflow-x-auto space-x-3 mt-4 mx-4 md:mx-24 p-2 bg-amber-600 shadow-gray-600 shadow-md rounded-md font-bold scrollbar-hide">
+                <p className="whitespace-nowrap cursor-pointer border-2 border-amber-600 hover:border-white hover:rounded-sm p-1">
+                    All
+                </p>
+                {category.map((meal) => (
+                    <p
+                    key={meal.strCategory}
+                    className="whitespace-nowrap cursor-pointer border-2 border-amber-600 hover:border-white hover:rounded-sm p-1"
+                    >
+                    {meal.strCategory}
+                    </p>
+                ))}
             </div>
+
 
             {/* Count recipes */}
             <div className="mt-4 mx-24 ">
@@ -66,7 +72,7 @@ const Home = () => {
             </div>
 
             {/* Lists */}
-            <div className="grid grid-cols-5 gap-4 mt-4 mx-24">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
                  <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
                     <img src="https://www.themealdb.com/images/media/meals/1548772327.jpg" alt="Baked salmon with fennel & tomatoes" className="w-3/4 rounded-sm" />
                     <p className="font-bold h-[3rem] text-center">Baked salmon with fennel & tomatoes</p>
