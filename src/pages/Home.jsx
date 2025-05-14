@@ -1,8 +1,35 @@
 import Navigation from "../components/Navigation";
 import Hero from "../assets/images/hero.jpg";
 import Footer from "../components/Footer";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+
+    const [category, setCategory] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchCategory = async () => {
+            try {
+                const response = await fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list");
+
+                if(!response.ok){
+                    throw new Error("Error fetching data");
+                }
+
+                const data = await response.json();
+                setCategory(data.meals);
+
+            } catch (error) {
+                console.error("Fetch error:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchCategory();
+    },[])
+
     return(
         <>
             {/* Title */}
@@ -24,14 +51,13 @@ const Home = () => {
                 </div>
             </section>
             {/* Filters */}
-            <div className="flex flex-row items-center place-content-evenly mt-4 mx-24 p-2 bg-amber-600 shadow-gray-600 shadow-md rounded-md font-bold">
+            <div className="flex flex-row items-center place-content-evenly mt-4 mx-24 p-2 bg-amber-600 shadow-gray-600 shadow-md rounded-md font-bold overflow-auto">
                 <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1">All</p>
-                <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1">Beef</p>
-                <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1">Chicken</p>
-                <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1">Pork</p>
-                <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1">Seafood</p>
-                <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1">Vegetarian</p>
-                <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1">Dessert</p>
+                {
+                    category.map((meal, index) => (
+                        <p className="cursor-pointer border-2 border-amber-600 hover:border-2 hover:border-white hover:rounded-sm p-1" key={index} >{meal.strCategory}</p>
+                    ))
+                }
             </div>
 
             {/* Count recipes */}
