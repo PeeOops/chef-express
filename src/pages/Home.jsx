@@ -7,20 +7,29 @@ const Home = () => {
 
     const [category, setCategory] = useState([]);
     const [filter, setFilter] = useState("Beef");
+    const [filteredLists, setFilteredLists] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [categoryURL] = await Promise.all([
+                const [categoryURL, filteredURL] = await Promise.all([
                     fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list").then((res) => {
                         if(!res.ok){
                             throw new Error("Fetch data failed")
                         }
                         return res.json();
                     }),
+                    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${filter}`).then((res) => {
+                        if(!res.ok){
+                            throw new Error("Fetch data failed");
+                        }
+
+                        return res.json();
+                    })
                 ])
                 setCategory(categoryURL.meals);
+                setFilteredLists(filteredURL.meals);
             } catch (error) {
                 console.error("Fetch error:", error);
             } finally {
@@ -29,8 +38,9 @@ const Home = () => {
         }
 
         fetchData();
-    },[])
+    },[filter])
 
+    // Set category filter
     const handleClickFilter = (filter) => {
         setFilter(filter);
     }
@@ -75,65 +85,14 @@ const Home = () => {
 
             {/* Lists */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
-                 <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/1548772327.jpg" alt="Baked salmon with fennel & tomatoes" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Baked salmon with fennel & tomatoes</p>
-                </div>
-            
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/uvuyxu1503067369.jpg" alt="Cajun spiced fish tacos" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Cajun spiced fish tacos</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/1520084413.jpg" alt="Escovitch Fish" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Escovitch Fish</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/a15wsa1614349126.jpg" alt="Fish fofos" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Fish fofos</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/ysxwuq1487323065.jpg" alt="Fish pie" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Fish pie</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/7n8su21699013057.jpg" alt="Fish Soup (Ukha)" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Fish Soup (Ukha)</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/vptqpw1511798500.jpg" alt="Fish Stew with Rouille" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Fish Stew with Rouille</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/wuvryu1468232995.jpg" alt="Garides Saganaki" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Garides Saganaki</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/lpd4wy1614347943.jpg" alt="Grilled Portuguese sardines" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Grilled Portuguese sardines</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/xxyupu1468262513.jpg" alt="Honey Teriyaki Salmon" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Honey Teriyaki Salmon</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/utxqpt1511639216.jpg" alt="Kedgeree" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Kedgeree</p>
-                </div>
-
-                <div className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                    <img src="https://www.themealdb.com/images/media/meals/1525873040.jpg" alt="Kung Po Prawns" className="w-3/4 rounded-sm" />
-                    <p className="font-bold h-[3rem] text-center">Kung Po Prawns</p>
-                </div>
+                {
+                    filteredLists.map((list) => (
+                        <div key={list.idMeal} className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
+                            <img src={`${list.strMealThumb}`} className="w-3/4 rounded-sm" alt={list.strMeal} />
+                            <p className="font-bold h-[3rem] text-center">{list.strMeal}</p>
+                        </div>
+                    ))
+                }
             </div>
 
             {/* Pagination */}
