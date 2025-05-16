@@ -6,20 +6,21 @@ import { useEffect, useState } from "react";
 const Home = () => {
 
     const [category, setCategory] = useState([]);
+    const [filter, setFilter] = useState("Beef");
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchCategory = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list");
-
-                if(!response.ok){
-                    throw new Error("Error fetching data");
-                }
-
-                const data = await response.json();
-                setCategory(data.meals);
-
+                const [categoryURL] = await Promise.all([
+                    fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list").then((res) => {
+                        if(!res.ok){
+                            throw new Error("Fetch data failed")
+                        }
+                        return res.json();
+                    }),
+                ])
+                setCategory(categoryURL.meals);
             } catch (error) {
                 console.error("Fetch error:", error);
             } finally {
@@ -27,8 +28,12 @@ const Home = () => {
             }
         }
 
-        fetchCategory();
+        fetchData();
     },[])
+
+    const handleClickFilter = (filter) => {
+        setFilter(filter);
+    }
 
     return(
         <>
@@ -52,13 +57,10 @@ const Home = () => {
             </section>
             {/* Filters */}
             <div className="flex overflow-x-auto space-x-3 mt-4 mx-4 md:mx-24 p-2 bg-amber-600 shadow-gray-600 shadow-md rounded-md font-bold scrollbar-hide">
-                <p className="whitespace-nowrap cursor-pointer border-2 border-amber-600 hover:border-white hover:rounded-sm p-1">
-                    All
-                </p>
                 {category.map((meal) => (
                     <p
                     key={meal.strCategory}
-                    className="whitespace-nowrap cursor-pointer border-2 border-amber-600 hover:border-white hover:rounded-sm p-1"
+                    className={`whitespace-nowrap cursor-pointer border-2 border-amber-600 hover:border-white hover:rounded-sm p-1 ${filter === meal.strCategory ? "border-white rounded-sm" : ""} `} onClick={() => handleClickFilter(meal.strCategory)}
                     >
                     {meal.strCategory}
                     </p>
