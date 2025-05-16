@@ -2,11 +2,13 @@ import Navigation from "../components/Navigation";
 import Hero from "../assets/images/hero.jpg";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const Home = () => {
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    const filter = searchParams.get("category") || "Beef";
     const [category, setCategory] = useState([]);
-    const [filter, setFilter] = useState("Beef");
     const [filteredLists, setFilteredLists] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -42,7 +44,7 @@ const Home = () => {
 
     // Set category filter
     const handleClickFilter = (filter) => {
-        setFilter(filter);
+        setSearchParams({category: filter});
     }
 
     return(
