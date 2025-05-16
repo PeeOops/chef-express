@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/index.css'
 import Home from './pages/Home.jsx'
 import Favourites from './pages/Favourites.jsx';
-import {PageNotFound} from './components/404.jsx';
+import PageNotFound from './components/404.jsx';
 
 
 

@@ -7,10 +7,11 @@ import { useSearchParams } from "react-router-dom";
 const Home = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const filter = searchParams.get("category") || "Beef";
     const [category, setCategory] = useState([]);
-    const [filteredLists, setFilteredLists] = useState([]);
     const [loading, setLoading] = useState(true);
+    const filter = searchParams.get("category") || "Beef";
+    const availableCategory = category.map((meal => meal.strCategory));
+    const [filteredLists, setFilteredLists] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -86,16 +87,31 @@ const Home = () => {
             </div>
 
             {/* Lists */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
+
                 {
-                    filteredLists.map((list) => (
-                        <div key={list.idMeal} className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
-                            <img src={`${list.strMealThumb}`} className="w-3/4 rounded-sm" alt={list.strMeal} />
-                            <p className="font-bold h-[3rem] text-center">{list.strMeal}</p>
+                    availableCategory.find((category) => searchParams.get("category") === category) ?
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
+                            { filteredLists.map((list) => (
+                                <div key={list.idMeal} className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
+                                    <img src={`${list.strMealThumb}`} className="w-3/4 rounded-sm" alt={list.strMeal} />
+                                    <p className="font-bold h-[3rem] text-center">{list.strMeal}</p>
+                                </div>
+                            ))}
                         </div>
-                    ))
+                    :
+
+                    <div className="grid min-h-full place-items-centerpx-6 py-24 sm:py-32 lg:px-8">
+                        <div className="text-center">
+                        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-red-600 sm:text-7xl">
+                            Category not found
+                        </h1>
+                        <p className="mt-6 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
+                            Sorry, we couldn’t find what you’re looking for.
+                        </p>
+                        </div>
+                    </div>
                 }
-            </div>
+   
 
             {/* Pagination */}
             <div className="flex flex-row place-content-between items-center font-bold mt-4 mx-24">
