@@ -2,10 +2,11 @@ import Navigation from "../components/Navigation";
 import Hero from "../assets/images/hero.jpg";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Home = () => {
 
+    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const [category, setCategory] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,6 +15,11 @@ const Home = () => {
     const [filteredLists, setFilteredLists] = useState([]);
 
     useEffect(() => {
+
+        if(window.location.search === ""){
+            navigate("?category=Beef");
+        }
+
         const fetchData = async () => {
             try {
                 const [categoryURL, filteredURL] = await Promise.all([
@@ -41,7 +47,7 @@ const Home = () => {
         }
 
         fetchData();
-    },[filter])
+    },[filter, navigate])
 
     // Set category filter
     const handleClickFilter = (filter) => {
