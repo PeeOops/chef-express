@@ -11,13 +11,20 @@ const Home = () => {
     const [category, setCategory] = useState([]);
     const [loading, setLoading] = useState(true);
     const filter = searchParams.get("category") || "Beef";
+
+    // Pagination
+    const currentPage = parseInt(searchParams.get("page") || "1");
+    const itemsPerPage = 10;
+    const lastIndex = currentPage * itemsPerPage;
+    const firstIndex = lastIndex - itemsPerPage;
+
     const availableCategory = category.map((meal => meal.strCategory));
     const [filteredLists, setFilteredLists] = useState([]);
 
     useEffect(() => {
 
         if(window.location.search === ""){
-            navigate("?category=Beef");
+            navigate("?category=Beef?page=1");
         }
 
         const fetchData = async () => {
@@ -51,7 +58,19 @@ const Home = () => {
 
     // Set category filter
     const handleClickFilter = (filter) => {
-        setSearchParams({category: filter});
+        setSearchParams({category: filter, page: 1});
+    }
+
+    const nextPage = () => {
+        if (currentPage < Math.ceil(filteredLists.length / itemsPerPage)) {
+            setSearchParams({category: filter, page: currentPage + 1});
+        }
+    }
+
+    const prevPage = () => {
+        if(currentPage > 1){
+            setSearchParams({category: filter, page: currentPage - 1});
+        }
     }
 
     return(
@@ -79,7 +98,7 @@ const Home = () => {
                 {category.map((meal) => (
                     <p
                     key={meal.strCategory}
-                    className={`whitespace-nowrap cursor-pointer border-2 border-amber-600 hover:border-white hover:rounded-sm p-1 ${filter === meal.strCategory ? "border-white rounded-sm" : ""} `} onClick={() => handleClickFilter(meal.strCategory)}
+                    className={`whitespace-nowrap cursor-pointer border-2 border-amber-600 hover:text-white hover:border-white hover:rounded-sm p-1 ${filter === meal.strCategory ? "border-white text-white     rounded-sm" : ""} `} onClick={() => handleClickFilter(meal.strCategory)}
                     >
                     {meal.strCategory}
                     </p>
@@ -97,7 +116,7 @@ const Home = () => {
                 {
                     availableCategory.find((category) => searchParams.get("category") === category) ?
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
-                            { filteredLists.map((list) => (
+                            { filteredLists.slice(firstIndex,lastIndex).map((list) => (
                                 <div key={list.idMeal} className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
                                     <img src={`${list.strMealThumb}`} className="w-3/4 rounded-sm" alt={list.strMeal} />
                                     <p className="font-bold h-[3rem] text-center">{list.strMeal}</p>
@@ -121,8 +140,8 @@ const Home = () => {
 
             {/* Pagination */}
             <div className="flex flex-row place-content-between items-center font-bold mt-4 mx-24">
-                <p>Prev</p>
-                <p>Next</p>
+                <p className="cursor-pointer hover:text-amber-600" onClick={() => prevPage()} >Prev</p>
+                <p className="cursor-pointer hover:text-amber-600" onClick={() => nextPage()} >Next</p>
             </div>
 
             {/* Footer */}
