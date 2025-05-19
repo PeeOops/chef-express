@@ -89,7 +89,7 @@ const Home = () => {
 
             {/* Count recipes */}
             <div className="mt-4 mx-24 ">
-                <p>You have <span className="font-bold h-[3rem]">21,766</span> recipes to try</p>
+                <p>You have <span className="font-bold h-[3rem]">{filteredLists.length}</span> recipes to try</p>
             </div>
 
             {/* Lists */}
