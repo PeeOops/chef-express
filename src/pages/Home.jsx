@@ -8,9 +8,11 @@ const Home = () => {
 
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [category, setCategory] = useState([]);
     const [loading, setLoading] = useState(true);
     const filter = searchParams.get("category") || "Beef";
+
+    // Search
+    const searchValue = searchParams.get("search") || "";
 
     // Pagination
     const currentPage = parseInt(searchParams.get("page") || "1");
@@ -18,18 +20,26 @@ const Home = () => {
     const lastIndex = currentPage * itemsPerPage;
     const firstIndex = lastIndex - itemsPerPage;
 
+    // Category
+    const [category, setCategory] = useState([]);
     const availableCategory = category.map((meal => meal.strCategory));
+
+    // Filtered meals
     const [filteredLists, setFilteredLists] = useState([]);
+
+    // Conditions
+    const hasSearch = searchValue !== "";
+    const isValidCategory = availableCategory.includes(filter);
 
     useEffect(() => {
 
         if(window.location.search === ""){
-            navigate("?category=Beef?page=1");
+            navigate("?category=Beef&page=1");
         }
 
         const fetchData = async () => {
             try {
-                const [categoryURL, filteredURL] = await Promise.all([
+                const [categoryURL, filteredURL, searchURL] = await Promise.all([
                     fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list").then((res) => {
                         if(!res.ok){
                             throw new Error("Fetch data failed")
@@ -42,10 +52,24 @@ const Home = () => {
                         }
 
                         return res.json();
+                    }),
+                    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`).then((res) => {
+                        if(!res.ok){
+                            throw new Error("Fetch data failed");
+                        }
+                        
+                        return res.json();
                     })
                 ])
                 setCategory(categoryURL.meals);
-                setFilteredLists(filteredURL.meals);
+                if(searchValue !== ""){
+                    setFilteredLists(searchURL.meals);
+                }else{
+                    setFilteredLists(filteredURL.meals);
+                }
+                console.log(filteredLists);
+                
+
             } catch (error) {
                 console.error("Fetch error:", error);
             } finally {
@@ -54,24 +78,39 @@ const Home = () => {
         }
 
         fetchData();
-    },[filter, navigate])
+    },[filter, navigate, searchValue])
 
     // Set category filter
     const handleClickFilter = (filter) => {
         setSearchParams({category: filter, page: 1});
     }
 
+    // Next page
     const nextPage = () => {
-        if (currentPage < Math.ceil(filteredLists.length / itemsPerPage)) {
-            setSearchParams({category: filter, page: currentPage + 1});
+        const maxPage = Math.ceil(filteredLists.length / itemsPerPage);
+        if (currentPage < maxPage) {
+            if (hasSearch) {
+                setSearchParams({ search: searchValue, page: currentPage + 1 });
+            } else if (isValidCategory) {
+                setSearchParams({ category: filter, page: currentPage + 1 });
+            }
         }
-    }
+    };
 
+    // Previous page
     const prevPage = () => {
-        if(currentPage > 1){
-            setSearchParams({category: filter, page: currentPage - 1});
+        if (currentPage > 1) {
+            if (hasSearch) {
+                setSearchParams({ search: searchValue, page: currentPage - 1 });
+            } else if (isValidCategory) {
+                setSearchParams({ category: filter, page: currentPage - 1 });
+            }
         }
-    }
+    };
+    const handleClickSubmit = (value) => {
+        const search = value.charAt(0).toUpperCase() + value.slice(1);
+        setSearchParams({ search, page: 1 });
+    };
 
     return(
         <>
@@ -81,7 +120,7 @@ const Home = () => {
                 <p className="text-lg">Explore - Cook - Enjoy</p>
             </div>
             {/* Navbar */}
-            <Navigation />
+            <Navigation onSubmit={handleClickSubmit} />
             {/* Hero */}
             <section className="relative h-[400px] w-full overflow-hidden mt-4">
                 <img
@@ -114,7 +153,7 @@ const Home = () => {
             {/* Lists */}
 
                 {
-                    availableCategory.find((category) => searchParams.get("category") === category) ?
+                    hasSearch || isValidCategory ?
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
                             { filteredLists.slice(firstIndex,lastIndex).map((list) => (
                                 <div key={list.idMeal} className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
