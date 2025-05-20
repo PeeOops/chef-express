@@ -22,7 +22,7 @@ const Home = () => {
 
     // Category
     const [category, setCategory] = useState([]);
-    const availableCategory = category.map((meal => meal.strCategory));
+    const availableCategory = category?.map((meal => meal.strCategory) || []);
 
     // Filtered meals
     const [filteredLists, setFilteredLists] = useState([]);
