@@ -37,7 +37,7 @@ const FoodDetails = () => {
                 <div className="flex flex-row gap-8">
                     <div className="flex flex-col">
                         <h1 className="text-2xl font-bold">Ingredients</h1>
-                        <ul className="list-disc px-4">
+                        <ul className="text-md list-disc px-4">
                             <li className="border-b-1 border-dashed border-amber-600">1 pound - penne rigate</li>
                             <li className="border-b-1 border-dashed border-amber-600">1/4 cup - olive oil</li>
                             <li className="border-b-1 border-dashed border-amber-600">3 cloves - garlic</li>
@@ -50,7 +50,7 @@ const FoodDetails = () => {
                     </div>
                     <div className="flex flex-col">
                         <h1 className="text-2xl font-bold">Instructions</h1>
-                        <ul className="list-decimal px-4">
+                        <ul className="text-md list-decimal px-4">
                             <li className="border-b-1 border-dashed border-amber-600">Bring a large pot of water to a boil</li>
                             <li className="border-b-1 border-dashed border-amber-600">Add kosher salt to the boiling water, then add the pasta. Cook according to the package instructions, about 9 minutes</li>
                             <li className="border-b-1 border-dashed border-amber-600">In a large skillet over medium-high heat, add the olive oil and heat until the oil starts to shimmer</li>
