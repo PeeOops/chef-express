@@ -11,13 +11,13 @@ const FoodDetails = () => {
             <Navigation />
 
             {/* Content */}
-            <div className="flex flex-col gap-6 px-28 mt-6">
+            <div className="flex flex-col gap-6 mx-28 p-8 mt-6 bg-white rounded-md shadow-gray-600 shadow-md">
                 {/* Header */}
-                <div className="flex flex-row gap-8 mt-2 w-fit">
+                <div className="flex flex-row gap-8 w-fit">
                     <img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="Spicy Arrabiata Penne" className="w-84 rounded-md shadow-gray-600 shadow-md" />
                     <div className="flex flex-col gap-2 w-fit">
                         <h1 className="text-4xl font-bold">Spicy Arrabiata Penne</h1>
-                        <p className="text-lg"># 52771</p>
+                        <p className="text-lg text-amber-600 font-bold"># 52771</p>
                         <div className="flex flex-row items-center border-2 border-black gap-2 p-1 rounded-md w-fit cursor-pointer hover:text-amber-600 hover:border-amber-600 text-lg">
                             <FontAwesomeIcon icon={faBookmark} />
                             <p className="font-bold">Save Recipe</p>
@@ -37,7 +37,7 @@ const FoodDetails = () => {
                 <div className="flex flex-row gap-8">
                     <div className="flex flex-col">
                         <h1 className="text-2xl font-bold">Ingredients</h1>
-                        <ul className="text-md list-disc px-4">
+                        <ul className="pl-4 text-md list-disc">
                             <li className="border-b-1 border-dashed border-amber-600">1 pound - penne rigate</li>
                             <li className="border-b-1 border-dashed border-amber-600">1/4 cup - olive oil</li>
                             <li className="border-b-1 border-dashed border-amber-600">3 cloves - garlic</li>
@@ -50,7 +50,7 @@ const FoodDetails = () => {
                     </div>
                     <div className="flex flex-col">
                         <h1 className="text-2xl font-bold">Instructions</h1>
-                        <ul className="text-md list-decimal px-4">
+                        <ul className="pl-4 text-md list-decimal">
                             <li className="border-b-1 border-dashed border-amber-600">Bring a large pot of water to a boil</li>
                             <li className="border-b-1 border-dashed border-amber-600">Add kosher salt to the boiling water, then add the pasta. Cook according to the package instructions, about 9 minutes</li>
                             <li className="border-b-1 border-dashed border-amber-600">In a large skillet over medium-high heat, add the olive oil and heat until the oil starts to shimmer</li>
