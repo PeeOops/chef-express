@@ -5,6 +5,7 @@ import './styles/index.css'
 import Home from './pages/Home.jsx'
 import Favourites from './pages/Favourites.jsx';
 import PageNotFound from './components/404.jsx';
+import FoodDetails from './pages/FoodDetails.jsx';
 
 
 
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
       <Route path="*" element={<PageNotFound />} />
       <Route path="/" element={<Home/>} />
       <Route path="/favourite" element={<Favourites/>} />
+      <Route path="/meals" element={<FoodDetails />} />
     </Routes>
   </BrowserRouter>
 )
