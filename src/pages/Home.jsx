@@ -17,7 +17,7 @@ const Home = () => {
 
     // Pagination
     const currentPage = parseInt(searchParams.get("page") || "1");
-    const itemsPerPage = 10;
+    const [itemsPerPage, setItemsPerPage] = useState(10);
     const lastIndex = currentPage * itemsPerPage;
     const firstIndex = lastIndex - itemsPerPage;
 
@@ -34,10 +34,25 @@ const Home = () => {
 
     useEffect(() => {
 
+        // Dynamic responsive item list
+        const updateItemPerPage = () => {
+            const width = window.innerWidth;
+
+            if (width >= 1280) {
+                setItemsPerPage(10); // xl
+            } else if (width >= 768) {
+                setItemsPerPage(9); // md
+            } else {
+                setItemsPerPage(6); // sm or smaller
+            }
+        }
+
+        // Defalt route
         if(window.location.search === ""){
             navigate("?category=Beef&page=1");
         }
 
+        // Fetch data
         const fetchData = async () => {
             try {
                 const [categoryURL, filteredURL, searchURL] = await Promise.all([
@@ -76,9 +91,15 @@ const Home = () => {
                 setLoading(false);
             }
         }
-
+        updateItemPerPage();
         fetchData();
-    },[filter, navigate, searchValue, setSearchParams])
+
+        // Update on resize
+        window.addEventListener("resize", updateItemPerPage);
+
+        // Cleanup
+        return () => window.removeEventListener("resize", updateItemPerPage);
+    },[filter, navigate, searchValue, setSearchParams, itemsPerPage])
 
 
     // Set category filter
@@ -160,7 +181,16 @@ const Home = () => {
 
             {/* Lists */}
 
-                {
+                {   
+                    loading ? 
+                        <div className="grid min-h-full place-items-centerpx-6 py-24 sm:py-32 lg:px-8">
+                            <div className="text-center">
+                                <h1 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-red-600 sm:text-7xl">
+                                    Loading...
+                                </h1>
+                            </div>
+                        </div>
+                    :
                     (hasSearch || isValidCategory) && filteredLists.length > 0 ?
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
                             { filteredLists.slice(firstIndex,lastIndex).map((list) => (
