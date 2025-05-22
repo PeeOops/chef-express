@@ -133,7 +133,7 @@ const Home = () => {
                     className="absolute inset-0 h-full w-full object-cover"
                 />
                 <div className="relative z-10 flex items-center justify-center h-full text-white bg-black/50">
-                    <h1 className="text-4xl font-bold">Your next meal starts here</h1>
+                    <h1 className="text-2xl md:text-4xl font-bold">Your next meal starts here</h1>
                 </div>
             </section>
             {/* Filters */}
@@ -150,7 +150,7 @@ const Home = () => {
 
 
             {/* Count recipes */}
-            <div className="flex flex-row justify-between items-center mt-4 mx-24 ">
+            <div className="flex flex-row justify-between items-center mt-4 mx-6 md:mx-24 ">
                 <p>You have <span className="font-bold h-[3rem]">{filteredLists.length}</span> recipes to try</p>
                 <div className="flex flex-row gap-2 items-center font-bold">
                     <input type="text" className="focus:outline-none border-b-1 p-1" placeholder="Search recipes..." onChange={handleChangeSearch} value={inputValue} />
@@ -164,7 +164,7 @@ const Home = () => {
                     (hasSearch || isValidCategory) && filteredLists.length > 0 ?
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
                             { filteredLists.slice(firstIndex,lastIndex).map((list) => (
-                                <div key={list.idMeal} className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
+                                <div key={list.idMeal} className="flex flex-col items-center place-content-center bg-white hover:bg-amber-600 hover:text-white shadow-gray-600 shadow-md rounded-sm p-2 w-3/4 md:w-full mx-auto cursor-pointer">
                                     <img src={`${list.strMealThumb}`} className="w-3/4 rounded-sm" alt={list.strMeal} />
                                     <p className="font-bold h-[3rem] text-center">{list.strMeal}</p>
                                 </div>
