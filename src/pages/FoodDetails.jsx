@@ -11,9 +11,9 @@ const FoodDetails = () => {
             <Navigation />
 
             {/* Content */}
-            <div className="flex flex-col gap-6 mx-28 p-8 mt-6 bg-white rounded-md shadow-gray-600 shadow-md">
+            <div className="flex flex-col gap-6 mx-2 md:mx-28 p-8 mt-6 bg-white rounded-md shadow-gray-600 shadow-md">
                 {/* Header */}
-                <div className="flex flex-row gap-8 w-fit">
+                <div className="flex flex-col md:flex-row gap-8 w-fit">
                     <img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="Spicy Arrabiata Penne" className="w-84 rounded-md shadow-gray-600 shadow-md" />
                     <div className="flex flex-col gap-2 w-fit">
                         <h1 className="text-4xl font-bold">Spicy Arrabiata Penne</h1>
@@ -34,7 +34,7 @@ const FoodDetails = () => {
                 </div>
 
                 {/* Ingredients & Steps */}
-                <div className="flex flex-row gap-8">
+                <div className="flex flex-col md:flex-row gap-8">
                     <div className="flex flex-col">
                         <h1 className="text-2xl font-bold">Ingredients</h1>
                         <ul className="pl-4 text-md list-disc">
