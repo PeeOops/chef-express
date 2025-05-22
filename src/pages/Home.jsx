@@ -12,6 +12,7 @@ const Home = () => {
     const filter = searchParams.get("category") || "Beef";
 
     // Search
+    const [inputValue, setInputValue] = useState("");
     const searchValue = searchParams.get("search") || "";
 
     // Pagination
@@ -63,11 +64,10 @@ const Home = () => {
                 ])
                 setCategory(categoryURL.meals);
                 if(searchValue !== ""){
-                    setFilteredLists(searchURL.meals);
+                    setFilteredLists(searchURL.meals || []);
                 }else{
-                    setFilteredLists(filteredURL.meals);
+                    setFilteredLists(filteredURL.meals || []);
                 }
-                console.log(filteredLists);
                 
 
             } catch (error) {
@@ -78,7 +78,8 @@ const Home = () => {
         }
 
         fetchData();
-    },[filter, navigate, searchValue])
+    },[filter, navigate, searchValue, setSearchParams])
+
 
     // Set category filter
     const handleClickFilter = (filter) => {
@@ -107,15 +108,23 @@ const Home = () => {
             }
         }
     };
-    const handleClickSubmit = (value) => {
-        const search = value.charAt(0).toUpperCase() + value.slice(1);
+
+    // Search
+    const handleChangeSearch = (e) => {
+        setInputValue(e.target.value);
+    }
+
+
+    const handleClickSearch = () => {
+        const search = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
         setSearchParams({ search, page: 1 });
+        setInputValue("");
     };
 
     return(
         <>
             {/* Navbar */}
-            <Navigation onSubmit={handleClickSubmit} />
+            <Navigation />
             {/* Hero */}
             <section className="relative h-[400px] w-full overflow-hidden mt-4">
                 <img
@@ -141,14 +150,18 @@ const Home = () => {
 
 
             {/* Count recipes */}
-            <div className="mt-4 mx-24 ">
+            <div className="flex flex-row justify-between items-center mt-4 mx-24 ">
                 <p>You have <span className="font-bold h-[3rem]">{filteredLists.length}</span> recipes to try</p>
+                <div className="flex flex-row gap-2 items-center font-bold">
+                    <input type="text" className="focus:outline-none border-b-1 p-1" placeholder="Search recipes..." onChange={handleChangeSearch} value={inputValue} />
+                    <button className="cursor-pointer" onClick={() => handleClickSearch()} >Search</button>
+                </div>
             </div>
 
             {/* Lists */}
 
                 {
-                    hasSearch || isValidCategory ?
+                    (hasSearch || isValidCategory) && filteredLists.length > 0 ?
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
                             { filteredLists.slice(firstIndex,lastIndex).map((list) => (
                                 <div key={list.idMeal} className="flex flex-col items-center justify-center bg-white shadow-gray-600 shadow-md rounded-sm p-2 w-full">
@@ -162,7 +175,7 @@ const Home = () => {
                     <div className="grid min-h-full place-items-centerpx-6 py-24 sm:py-32 lg:px-8">
                         <div className="text-center">
                         <h1 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-red-600 sm:text-7xl">
-                            Category not found
+                            Meals not found
                         </h1>
                         <p className="mt-6 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
                             Sorry, we couldn’t find what you’re looking for.

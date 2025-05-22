@@ -1,20 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom"
-import { useLocation } from "react-router-dom"
 
-const Navigation = ({onSubmit}) => {
-
-    const location = useLocation();
-    const [inputValue, setInputValue] = useState("");
-
-    const handleChangeInput = (e) => {
-        setInputValue(e.target.value);
-    }
-
-    const handleClickSearch = () => {
-        onSubmit(inputValue);
-    }
-
+const Navigation = () => {
     return(
         <>
             {/* Title */}
@@ -27,10 +13,6 @@ const Navigation = ({onSubmit}) => {
                     <Link to="/?category=Beef&page=1" className={`cursor-pointer ${location.pathname === "/" ? "text-white" : "text-black" }`}>Home</Link>
                     <Link to="/favourite" className={`cursor-pointer ${location.pathname === "/favourite" ? "text-white" : "text-black" }`}>Favourites</Link>
                 </ul>
-                <div className="flex flex-row gap-2 items-center">
-                    <input type="text" className="focus:outline-none border-b-1 p-1" placeholder="Search recipes..." value={inputValue} onChange={handleChangeInput} />
-                    <button className="cursor-pointer" onClick={() => handleClickSearch()}>Search</button>
-                </div>
             </div>
         </>
 
