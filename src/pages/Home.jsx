@@ -164,7 +164,7 @@ const Home = () => {
                     (hasSearch || isValidCategory) && filteredLists.length > 0 ?
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
                             { filteredLists.slice(firstIndex,lastIndex).map((list) => (
-                                <div key={list.idMeal} className="flex flex-col items-center place-content-center bg-white hover:bg-amber-600 hover:text-white shadow-gray-600 shadow-md rounded-sm p-2 w-3/4 md:w-full mx-auto cursor-pointer">
+                                <div key={list.idMeal} className="flex flex-col items-center place-content-center bg-white hover:bg-amber-600 hover:text-white active:bg-amber-600 active:text-white shadow-gray-600 shadow-md rounded-sm p-2 w-3/4 md:w-full mx-auto cursor-pointer">
                                     <img src={`${list.strMealThumb}`} className="w-3/4 rounded-sm" alt={list.strMeal} />
                                     <p className="font-bold h-[3rem] text-center">{list.strMeal}</p>
                                 </div>
@@ -187,8 +187,8 @@ const Home = () => {
 
             {/* Pagination */}
             <div className="flex flex-row place-content-between items-center font-bold mt-4 mx-24">
-                <p className="cursor-pointer hover:text-amber-600" onClick={() => prevPage()} >Prev</p>
-                <p className="cursor-pointer hover:text-amber-600" onClick={() => nextPage()} >Next</p>
+                <button className="cursor-pointer hover:text-amber-600 active:text-amber-600" onClick={() => prevPage()} >Prev</button>
+                <button className="cursor-pointer hover:text-amber-600 active:text-amber-600" onClick={() => nextPage()} >Next</button>
             </div>
 
             {/* Footer */}

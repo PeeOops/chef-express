@@ -10,8 +10,6 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    host: true, // Needed to access from external devices (sets host to 0.0.0.0)
-    port: 5173, // Or your desired port
     allowedHosts: true // Allow ngrok / mobile / external IPs
   }
 })
