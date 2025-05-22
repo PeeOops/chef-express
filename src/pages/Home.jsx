@@ -47,7 +47,7 @@ const Home = () => {
             }
         }
 
-        // Defalt route
+        // Default route
         if(window.location.search === ""){
             navigate("?category=Beef&page=1");
         }
@@ -160,7 +160,7 @@ const Home = () => {
             {/* Filters */}
             <div className="flex overflow-x-auto space-x-3 mt-4 mx-4 md:mx-24 p-2 bg-amber-600 shadow-gray-600 shadow-md rounded-md font-bold scrollbar-hide">
                 {category.map((meal) => (
-                    <p
+                    <p role="button"
                     key={meal.strCategory}
                     className={`whitespace-nowrap cursor-pointer border-2 border-amber-600 hover:text-white hover:border-white hover:rounded-sm p-1 ${filter === meal.strCategory ? "border-white text-white     rounded-sm" : ""} `} onClick={() => handleClickFilter(meal.strCategory)}
                     >
@@ -174,7 +174,7 @@ const Home = () => {
             <div className="flex flex-row justify-between items-center mt-4 mx-6 md:mx-24 ">
                 <p>You have <span className="font-bold h-[3rem]">{filteredLists.length}</span> recipes to try</p>
                 <div className="flex flex-row gap-2 items-center font-bold">
-                    <input type="text" className="focus:outline-none border-b-1 p-1" placeholder="Search recipes..." onChange={handleChangeSearch} value={inputValue} />
+                    <input type="text" className="focus:outline-none border-b-1 p-1" placeholder="Search recipes..." onChange={handleChangeSearch} onKeyDown={(e) => e.key === "Enter" && handleClickSearch()} value={inputValue} />
                     <button className="cursor-pointer" onClick={() => handleClickSearch()} >Search</button>
                 </div>
             </div>
@@ -217,8 +217,8 @@ const Home = () => {
 
             {/* Pagination */}
             <div className="flex flex-row place-content-between items-center font-bold mt-4 mx-24">
-                <button className="cursor-pointer hover:text-amber-600 active:text-amber-600" onClick={() => prevPage()} >Prev</button>
-                <button className="cursor-pointer hover:text-amber-600 active:text-amber-600" onClick={() => nextPage()} >Next</button>
+                <button className={`cursor-pointer hover:text-amber-600 active:text-amber-600 ${currentPage === 1 ? "invisible" : "visible"}`} onClick={() => prevPage()} >Prev</button>
+                <button className={`cursor-pointer hover:text-amber-600 active:text-amber-6004 ${currentPage === Math.ceil(filteredLists.length / itemsPerPage) ? "invisible" : "visible"}`} onClick={() => nextPage()} >Next</button>
             </div>
 
             {/* Footer */}
