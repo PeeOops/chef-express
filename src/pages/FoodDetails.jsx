@@ -1,10 +1,36 @@
 import { faYoutube } from "@fortawesome/free-brands-svg-icons"
-import { faArrowLeft, faBookmark } from "@fortawesome/free-solid-svg-icons"
+import { faBookmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Footer from "../components/Footer"
 import Navigation from "../components/Navigation"
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 const FoodDetails = () => {
+
+    const { id } = useParams();
+    const [loading, setLoading] = useState(true)
+    const [mealDetails, setMealDetails] = useState(null);
+
+    useEffect(() => {
+        const fetchMealDetails = async () => {
+            try {
+                const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+                if (!response.ok) {
+                    throw new Error("Fetch data failed");
+                }
+                const data = await response.json();
+                setMealDetails(data.meals[0]);
+                console.log(mealDetails)
+            } catch (error) {
+                console.error("Fetch error:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchMealDetails();
+    }, [id]);
+
     return(
         <>
             {/* Navbar */}
@@ -16,8 +42,8 @@ const FoodDetails = () => {
                 <div className="flex flex-col md:flex-row gap-8 w-fit">
                     <img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="Spicy Arrabiata Penne" className="w-84 rounded-md shadow-gray-600 shadow-md" />
                     <div className="flex flex-col gap-2 w-fit">
-                        <h1 className="text-4xl font-bold">Spicy Arrabiata Penne</h1>
-                        <p className="text-lg text-amber-600 font-bold"># 52771</p>
+                        <h1 className="text-4xl font-bold"></h1>
+                        <p className="text-lg text-amber-600 font-bold"># {id}</p>
                         <div className="flex flex-row items-center border-2 border-black gap-2 p-1 rounded-md w-fit cursor-pointer hover:text-amber-600 hover:border-amber-600 text-lg">
                             <FontAwesomeIcon icon={faBookmark} />
                             <p className="font-bold">Save Recipe</p>

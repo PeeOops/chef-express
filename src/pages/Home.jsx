@@ -2,7 +2,7 @@ import Navigation from "../components/Navigation";
 import Hero from "../assets/images/hero.jpg";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 const Home = () => {
 
@@ -194,10 +194,10 @@ const Home = () => {
                     (hasSearch || isValidCategory) && filteredLists.length > 0 ?
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-4 md:mx-24">
                             { filteredLists.slice(firstIndex,lastIndex).map((list) => (
-                                <div key={list.idMeal} className="flex flex-col items-center place-content-center bg-white hover:bg-amber-600 hover:text-white active:bg-amber-600 active:text-white shadow-gray-600 shadow-md rounded-sm p-2 w-3/4 md:w-full mx-auto cursor-pointer">
+                                <Link to={`meals/${list.idMeal}`} key={list.idMeal} className="flex flex-col items-center place-content-center bg-white hover:bg-amber-600 hover:text-white active:bg-amber-600 active:text-white shadow-gray-600 shadow-md rounded-sm p-2 w-3/4 md:w-full mx-auto cursor-pointer">
                                     <img src={`${list.strMealThumb}`} className="w-3/4 rounded-sm" alt={list.strMeal} />
                                     <p className="font-bold h-[3rem] text-center">{list.strMeal}</p>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     :
