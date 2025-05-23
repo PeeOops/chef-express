@@ -12,7 +12,6 @@ const FoodDetails = () => {
     const [loading, setLoading] = useState(true)
     const [mealDetails, setMealDetails] = useState([]);
     const [ingredients, setIngredients] = useState([]);
-    const [measurements, setMeasurements] = useState([]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -26,6 +25,17 @@ const FoodDetails = () => {
                 const data = await response.json();
                 setMealDetails(data.meals[0]);
 
+                // Ingredients
+                const ingredientsArray = [];
+                for(let i = 1; i <= 20; i++){
+                    const listOfIngredients = data.meals[0]["strIngredient" + i];
+                    const listOfMeasurements = data.meals[0]["strMeasure" + i];
+                    if(listOfIngredients && listOfIngredients.trim() !== "" && listOfMeasurements && listOfMeasurements.trim() !== ""){
+                        ingredientsArray.push({"ingredient" : listOfIngredients, "measurements" : listOfMeasurements});
+                    }
+                }
+                setIngredients(ingredientsArray);
+
             } catch (error) {
                 console.error("Fetch error:", error);
             } finally {
@@ -33,28 +43,8 @@ const FoodDetails = () => {
             }
         };
 
-        // Ingredients
-        const ingredientsArray = [];
-        for(let i = 1; i <= 20; i++){
-            const listOfIngredients = mealDetails["strIngredient" + i];
-            if(listOfIngredients && listOfIngredients.trim() !== ""){
-                ingredientsArray.push(listOfIngredients.trim());
-            }
-        }
-
-        // Measurements
-        const measurementsArray = [];
-        for (let i = 1; i <= 20; i++){
-            const listOfMeasurements = mealDetails["strMeasure" + i];
-            if(listOfMeasurements && listOfMeasurements.trim() !== ""){
-                measurementsArray.push(listOfMeasurements.trim());
-            }
-        }
-
-        setMeasurements(measurementsArray);
-        setIngredients(ingredientsArray);
         fetchMealDetails();
-    }, [id, mealDetails]);
+    }, [id]);
 
     return(
         <>
@@ -89,8 +79,17 @@ const FoodDetails = () => {
                     <div className="flex flex-col">
                         <h1 className="text-2xl font-bold">Ingredients</h1>
                         <ul className="pl-4 text-md list-disc">
-                            <li className="border-b-1 border-dashed border-amber-600">1 pound - penne rigate</li>
-                            <li className="border-b-1 border-dashed border-amber-600">1/4 cup - olive oil</li>
+                            {
+                                ingredients.map((ingredient) => (
+                                    <div className="flex flex-row items-center gap-2">
+                                        <li className="border-b-1 border-dashed border-amber-600">{ingredient.measurements}</li>
+                                        <span>-</span>
+                                        <p className="border-b-1 border-dashed border-amber-600">{ingredient.ingredient}</p>
+                                    </div>
+                                ))
+                                
+                            }
+                            
                         </ul>
                     </div>
                     <div className="flex flex-col">
