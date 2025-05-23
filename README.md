@@ -2,7 +2,7 @@
 
 A modern, responsive React app to explore and discover meals using [TheMealDB API](https://www.themealdb.com/). Filter by category, search recipes, view detailed ingredients, and instructions — all with a sleek UI.
 
-![FindRecipe Screenshot]
+## 📷 Screenshots
 
 Coming Soon
 
