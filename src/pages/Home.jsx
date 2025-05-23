@@ -99,6 +99,7 @@ const Home = () => {
 
         // Cleanup
         return () => window.removeEventListener("resize", updateItemPerPage);
+        
     },[filter, navigate, searchValue, setSearchParams, itemsPerPage])
 
 

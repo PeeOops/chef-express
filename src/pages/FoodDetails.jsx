@@ -10,9 +10,11 @@ const FoodDetails = () => {
 
     const { id } = useParams();
     const [loading, setLoading] = useState(true)
-    const [mealDetails, setMealDetails] = useState(null);
+    const [mealDetails, setMealDetails] = useState([]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         const fetchMealDetails = async () => {
             try {
                 const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -21,7 +23,6 @@ const FoodDetails = () => {
                 }
                 const data = await response.json();
                 setMealDetails(data.meals[0]);
-                console.log(mealDetails)
             } catch (error) {
                 console.error("Fetch error:", error);
             } finally {
@@ -40,19 +41,19 @@ const FoodDetails = () => {
             <div className="flex flex-col gap-6 mx-2 md:mx-28 p-8 mt-6 bg-white rounded-md shadow-gray-600 shadow-md">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row gap-8 w-fit">
-                    <img src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="Spicy Arrabiata Penne" className="w-84 rounded-md shadow-gray-600 shadow-md" />
+                    <img src={mealDetails.strMealThumb} alt={mealDetails.strMeal} className="w-84 rounded-md shadow-gray-600 shadow-md" />
                     <div className="flex flex-col gap-2 w-fit">
-                        <h1 className="text-4xl font-bold"></h1>
-                        <p className="text-lg text-amber-600 font-bold"># {id}</p>
+                        <h1 className="text-4xl font-bold">{mealDetails?.strMeal || "-"}</h1>
+                        <p className="text-lg text-amber-600 font-bold"># {mealDetails?.idMeal || "-"}</p>
                         <div className="flex flex-row items-center border-2 border-black gap-2 p-1 rounded-md w-fit cursor-pointer hover:text-amber-600 hover:border-amber-600 text-lg">
                             <FontAwesomeIcon icon={faBookmark} />
                             <p className="font-bold">Save Recipe</p>
                         </div>
                         <div className="text-lg">
-                            <p><span className="font-bold">Cuisine:</span> Italian</p>
-                            <p><span className="font-bold">Category:</span> Vegetarian</p>
-                            <p><span className="font-bold">Youtube Link:</span> <a href="https://www.youtube.com/watch?v=1IszT_guI08" target="_blank"><FontAwesomeIcon icon={faYoutube} className="text-red-600" /></a></p>
-                            <p><span className="font-bold">Tags:</span> Pasta, Curry</p>
+                            <p><span className="font-bold">Cuisine:</span> {mealDetails?.strArea || "-"}</p>
+                            <p><span className="font-bold">Category:</span> {mealDetails?.strCategory || "-"}</p>
+                            <p><span className="font-bold">Youtube Link:</span> <a href={mealDetails?.strYoutube} target="_blank"><FontAwesomeIcon icon={faYoutube} className="text-red-600" /></a></p>
+                            <p><span className="font-bold">Tags:</span> {mealDetails?.strTags || "-"}</p>
                         </div>
                         
                     </div>
