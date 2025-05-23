@@ -12,6 +12,7 @@ const FoodDetails = () => {
     const [loading, setLoading] = useState(true)
     const [mealDetails, setMealDetails] = useState([]);
     const [ingredients, setIngredients] = useState([]);
+    const [instructions, setInstructions] = useState([]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -35,6 +36,10 @@ const FoodDetails = () => {
                     }
                 }
                 setIngredients(ingredientsArray);
+
+                // Instructions
+                const instructionsReg = data.meals[0].strInstructions.replace(/\r?\n/g, ' ').split('. ').map(instruction => instruction.trim()).filter(instruction => instruction !== "");
+                setInstructions(instructionsReg);
 
             } catch (error) {
                 console.error("Fetch error:", error);
@@ -74,17 +79,17 @@ const FoodDetails = () => {
 
                 </div>
 
-                {/* Ingredients & Steps */}
+                {/* Ingredients & Instructions */}
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="flex flex-col">
                         <h1 className="text-2xl font-bold">Ingredients</h1>
                         <ul className="pl-4 text-md list-disc">
                             {
                                 ingredients.map((ingredient) => (
-                                    <div className="flex flex-row items-center gap-2">
-                                        <li className="border-b-1 border-dashed border-amber-600">{ingredient.measurements}</li>
+                                    <div key={ingredient.ingredient} className="flex flex-row items-center gap-1 border-b-1 border-dashed border-amber-600 last:border-b-0">
+                                        <li>{ingredient.measurements}</li>
                                         <span>-</span>
-                                        <p className="border-b-1 border-dashed border-amber-600">{ingredient.ingredient}</p>
+                                        <p>{ingredient.ingredient}</p>
                                     </div>
                                 ))
                                 
@@ -94,16 +99,13 @@ const FoodDetails = () => {
                     </div>
                     <div className="flex flex-col">
                         <h1 className="text-2xl font-bold">Instructions</h1>
-                        <ul className="pl-4 text-md list-decimal">
-                            <li className="border-b-1 border-dashed border-amber-600">Bring a large pot of water to a boil</li>
-                            <li className="border-b-1 border-dashed border-amber-600">Add kosher salt to the boiling water, then add the pasta. Cook according to the package instructions, about 9 minutes</li>
-                            <li className="border-b-1 border-dashed border-amber-600">In a large skillet over medium-high heat, add the olive oil and heat until the oil starts to shimmer</li>
-                            <li className="border-b-1 border-dashed border-amber-600">Add the garlic and cook, stirring, until fragrant, 1 to 2 minutes</li>
-                            <li className="border-b-1 border-dashed border-amber-600">Add the chopped tomatoes, red chile flakes, Italian seasoning and salt and pepper to taste</li>
-                            <li className="border-b-1 border-dashed border-amber-600">Bring to a boil and cook for 5 minutes</li>
-                            <li className="border-b-1 border-dashed border-amber-600">Remove from the heat and add the chopped basil</li>
-                            <li className="border-b-1 border-dashed border-amber-600">Drain the pasta and add it to the sauce</li>
-                            <li className="border-b-1 border-dashed border-amber-600">Garnish with Parmigiano-Reggiano flakes and more basil and serve warm</li>
+                        <ul className="flex flex-col pl-4 text-md list-decimal">
+                            {   
+                                instructions.map((instruction) => (
+                                    <li key={instruction} className="border-b-1 border-dashed border-amber-600 last:border-b-0">{instruction}</li>
+                                ))
+                                
+                            }
                         </ul>
                     </div>
                 </div>
