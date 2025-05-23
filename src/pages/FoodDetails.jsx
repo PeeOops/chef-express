@@ -11,6 +11,8 @@ const FoodDetails = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(true)
     const [mealDetails, setMealDetails] = useState([]);
+    const [ingredients, setIngredients] = useState([]);
+    const [measurements, setMeasurements] = useState([]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -23,14 +25,36 @@ const FoodDetails = () => {
                 }
                 const data = await response.json();
                 setMealDetails(data.meals[0]);
+
             } catch (error) {
                 console.error("Fetch error:", error);
             } finally {
                 setLoading(false);
             }
         };
+
+        // Ingredients
+        const ingredientsArray = [];
+        for(let i = 1; i <= 20; i++){
+            const listOfIngredients = mealDetails["strIngredient" + i];
+            if(listOfIngredients && listOfIngredients.trim() !== ""){
+                ingredientsArray.push(listOfIngredients.trim());
+            }
+        }
+
+        // Measurements
+        const measurementsArray = [];
+        for (let i = 1; i <= 20; i++){
+            const listOfMeasurements = mealDetails["strMeasure" + i];
+            if(listOfMeasurements && listOfMeasurements.trim() !== ""){
+                measurementsArray.push(listOfMeasurements.trim());
+            }
+        }
+
+        setMeasurements(measurementsArray);
+        setIngredients(ingredientsArray);
         fetchMealDetails();
-    }, [id]);
+    }, [id, mealDetails]);
 
     return(
         <>
@@ -67,12 +91,6 @@ const FoodDetails = () => {
                         <ul className="pl-4 text-md list-disc">
                             <li className="border-b-1 border-dashed border-amber-600">1 pound - penne rigate</li>
                             <li className="border-b-1 border-dashed border-amber-600">1/4 cup - olive oil</li>
-                            <li className="border-b-1 border-dashed border-amber-600">3 cloves - garlic</li>
-                            <li className="border-b-1 border-dashed border-amber-600">1 tin - chopped tomatoes</li>
-                            <li className="border-b-1 border-dashed border-amber-600">1/2 teaspoon - red chilli flakes</li>
-                            <li className="border-b-1 border-dashed border-amber-600">1/2 teaspoon - italian seasoning</li>
-                            <li className="border-b-1 border-dashed border-amber-600">6 leaves - basil</li>
-                            <li className="border-b-1 border-dashed border-amber-600">sprinkling - Parmiggiano-Reggiano</li>
                         </ul>
                     </div>
                     <div className="flex flex-col">
