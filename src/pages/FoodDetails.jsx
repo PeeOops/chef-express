@@ -38,7 +38,7 @@ const FoodDetails = () => {
                 setIngredients(ingredientsArray);
 
                 // Instructions
-                const instructionsReg = data.meals[0].strInstructions.replace(/\r?\n/g, ' ').split('. ').map(instruction => instruction.trim()).filter(instruction => instruction !== "");
+                const instructionsReg = data.meals[0].strInstructions.replace(/\r?\n/g, ' ').replace(/\b\d+\.\s/g, '').split('. ').map(instruction => instruction.trim()).filter(instruction => instruction !== "");
                 setInstructions(instructionsReg);
 
             } catch (error) {
