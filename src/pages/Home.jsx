@@ -197,7 +197,7 @@ const Home = () => {
                             { filteredLists.slice(firstIndex,lastIndex).map((list) => (
                                 <Link to={`meals/${list.idMeal}`} key={list.idMeal} className="flex flex-col items-center place-content-center bg-white hover:bg-amber-600 hover:text-white active:bg-amber-600 active:text-white shadow-gray-600 shadow-md rounded-sm p-2 w-3/4 md:w-full mx-auto cursor-pointer">
                                     <img src={`${list.strMealThumb}`} className="w-3/4 rounded-sm" alt={list.strMeal} />
-                                    <p className="font-bold h-[3rem] text-center">{list.strMeal}</p>
+                                    <p className="font-bold h-[3rem] md:h-[5rem] text-center">{list.strMeal}</p>
                                 </Link>
                             ))}
                         </div>
