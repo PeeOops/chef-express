@@ -25,7 +25,7 @@ A personal React.js portfolio project to explore, search, and save your favorite
 
 ## 📸 Screenshots
 
-### Homepage with Category Filters (Web)
+### Homepage with Category Filters
 ![Home](public/screenshots/web/home.png)
 
 ### Recipe Detail Page
