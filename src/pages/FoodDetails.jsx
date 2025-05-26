@@ -69,26 +69,25 @@ const FoodDetails = () => {
     const handleClickSaveRecipe = () => {
         const savedLists = JSON.parse(localStorage.getItem("recipes") || "[]");
 
-        const newRecipe = {
-            id: mealDetails.idMeal,
-            title: mealDetails.strMeal,
-            cuisine: mealDetails.strArea,
-            category: mealDetails.strCategory,
-            tags: mealDetails.strTags,
-            img: mealDetails.strMealThumb
+        const exists = savedLists.some(recipe => recipe.id === mealDetails.idMeal);
+
+        if (exists) {
+            const updated = savedLists.filter(recipe => recipe.id !== mealDetails.idMeal);
+            localStorage.setItem("recipes", JSON.stringify(updated));
+            setIsSaved(false);
+        } else {
+            const newRecipe = {
+                id: mealDetails.idMeal,
+                title: mealDetails.strMeal,
+                cuisine: mealDetails.strArea,
+                category: mealDetails.strCategory,
+                tags: mealDetails.strTags,
+                img: mealDetails.strMealThumb
+            };
+            savedLists.push(newRecipe);
+            localStorage.setItem("recipes", JSON.stringify(savedLists));
+            setIsSaved(true);
         }
-
-        const exists = savedLists.some(list => list.id === newRecipe.id);
-        if(exists){
-            alert("You have added this recipe");
-            return;
-        }
-
-        savedLists.push(newRecipe);
-
-        localStorage.setItem("recipes", JSON.stringify(savedLists));
-        
-        setIsSaved(true);
     }
 
     return(
