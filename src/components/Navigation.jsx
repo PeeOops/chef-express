@@ -14,7 +14,6 @@ const Navigation = () => {
                     <span className="border-1 md:border-0 w-full md:w-auto"></span>
                     <Link to="/favourite" className={`cursor-pointer ${location.pathname === "/favourite" ? "text-white" : "text-black" }`}>Favourites</Link>
                     <span className="border-1 md:border-0 w-full md:w-auto"></span>
-                    <Link to="/categories" className={`cursor-pointer ${location.pathname === "/categories" ? "text-white" : "text-black" }`}>Categories Guide</Link>
                 </ul>
             </div>
         </>
