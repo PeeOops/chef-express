@@ -13,6 +13,7 @@ const FoodDetails = () => {
     const [mealDetails, setMealDetails] = useState([]);
     const [ingredients, setIngredients] = useState([]);
     const [instructions, setInstructions] = useState([]);
+    const [isSaved,setIsSaved] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -49,12 +50,24 @@ const FoodDetails = () => {
         };
 
         fetchMealDetails();
+
+
     }, [id]);
+
+    useEffect(() => {
+        const savedLists = JSON.parse(localStorage.getItem("recipes") || "[]");
+        const exists = savedLists.some((item) => item.id === mealDetails.idMeal);
+
+        if(exists){
+            setIsSaved(true);
+        }
+
+    }, [mealDetails])
 
     // Save recipe
 
     const handleClickSaveRecipe = () => {
-        const savedLists = JSON.parse(localStorage.getItem("recipes") || []);
+        const savedLists = JSON.parse(localStorage.getItem("recipes") || "[]");
 
         const newRecipe = {
             id: mealDetails.idMeal,
@@ -74,6 +87,8 @@ const FoodDetails = () => {
         savedLists.push(newRecipe);
 
         localStorage.setItem("recipes", JSON.stringify(savedLists));
+        
+        setIsSaved(true);
     }
 
     return(
@@ -91,7 +106,11 @@ const FoodDetails = () => {
                         <p className="text-lg text-amber-600 font-bold"># {mealDetails?.idMeal || "-"}</p>
                         <div role="button" className="flex flex-row items-center border-2 border-black gap-2 p-1 rounded-md w-fit cursor-pointer hover:text-amber-600 hover:border-amber-600 active:text-amber-600 active:border-amber-600 text-lg">
                             <FontAwesomeIcon icon={faBookmark} />
-                            <p className="font-bold">Save Recipe</p>
+                            {
+                                isSaved ? 
+                                <p onClick={() => handleClickSaveRecipe()} className="font-bold">Saved</p> :
+                                <p onClick={() => handleClickSaveRecipe()} className="font-bold">Save Recipe</p>
+                            }
                         </div>
                         <div className="text-lg">
                             <p><span className="font-bold">Cuisine:</span> {mealDetails?.strArea || "-"}</p>
