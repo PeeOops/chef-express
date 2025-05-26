@@ -5,7 +5,7 @@ const Navigation = () => {
         <>
             {/* Title */}
             <div className="flex flex-col justify-center items-center my-4">
-                <h1 className="text-4xl font-bold">ChefExpress</h1>
+                <Link to="/?category=Beef&page=1" className="text-4xl font-bold">ChefExpress</Link>
                 <p className="text-lg">Explore - Cook - Enjoy</p>
             </div>
             <div className="font-bold text-lg bg-amber-600 shadow-gray-600 shadow-md px-6 md:px-28 py-2">

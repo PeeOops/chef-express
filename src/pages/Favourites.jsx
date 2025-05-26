@@ -42,8 +42,8 @@ const Favourites = () => {
                     </div>
                 :
                 savedRecipe.map((recipe) => (
-                    <div key={recipe.id} role="button" className="flex flex-col md:flex-row gap-6 mx-4 md:mx-28 p-8 mt-6 bg-white rounded-md shadow-gray-600 shadow-md">
-                        <img src={recipe.img} alt={recipe.title} className="w-full md:w-72 mx-auto rounded-md" />
+                    <div key={recipe.id} role="button" className="flex flex-col md:flex-row justify-start gap-6 mx-4 md:mx-28 p-8 mt-6 bg-white rounded-md shadow-gray-600 shadow-md">
+                        <img src={recipe.img} alt={recipe.title} className="w-full md:w-72 mx-auto md:mx-0 rounded-md" />
                         <div className="flex flex-col gap-2">
                             <h1 className="font-bold text-3xl  md:text-3xl">{recipe?.title ?? "-"}</h1>
                             <div>
