@@ -1,4 +1,4 @@
-# 🍽️ ChefExpress — Recipe Finder App - PeeDegrees
+## 🍽️ ChefExpress — Recipe Finder App
 
 A personal React.js portfolio project to explore, search, and save your favorite meals. Built using the [TheMealDB API](https://www.themealdb.com/), this app allows users to:
 
@@ -81,3 +81,4 @@ A personal React.js portfolio project to explore, search, and save your favorite
    Visit http://localhost:3000 or the port shown in terminal.
    ``` 
 
+## PeeDegrees
