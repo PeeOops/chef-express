@@ -62,8 +62,8 @@ A personal React.js portfolio project to explore, search, and save your favorite
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/meal-explorer.git
-   cd meal-explorer
+   git clone https://github.com/PeeOops/chef-express.git
+   cd chef-express
    ```
 
 2. **Install dependencies**
@@ -77,8 +77,6 @@ A personal React.js portfolio project to explore, search, and save your favorite
    ```
 
 4. **Open in browser**
-   ```bash
-   Visit http://localhost:3000 or the port shown in terminal.
-   ``` 
+   Visit http://localhost:5173 or the port shown in terminal.
 
-## PeeDegrees
+PeeDegrees
