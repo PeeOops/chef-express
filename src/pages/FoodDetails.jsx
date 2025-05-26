@@ -51,6 +51,31 @@ const FoodDetails = () => {
         fetchMealDetails();
     }, [id]);
 
+    // Save recipe
+
+    const handleClickSaveRecipe = () => {
+        const savedLists = JSON.parse(localStorage.getItem("recipes") || []);
+
+        const newRecipe = {
+            id: mealDetails.idMeal,
+            title: mealDetails.strMeal,
+            cuisine: mealDetails.strArea,
+            category: mealDetails.strCategory,
+            tags: mealDetails.strTags,
+            img: mealDetails.strMealThumb
+        }
+
+        const exists = savedLists.some(list => list.id === newRecipe.id);
+        if(exists){
+            alert("You have added this recipe");
+            return;
+        }
+
+        savedLists.push(newRecipe);
+
+        localStorage.setItem("recipes", JSON.stringify(savedLists));
+    }
+
     return(
         <>
             {/* Navbar */}
@@ -64,7 +89,7 @@ const FoodDetails = () => {
                     <div className="flex flex-col gap-2 w-fit">
                         <h1 className="text-4xl font-bold">{mealDetails?.strMeal || "-"}</h1>
                         <p className="text-lg text-amber-600 font-bold"># {mealDetails?.idMeal || "-"}</p>
-                        <div className="flex flex-row items-center border-2 border-black gap-2 p-1 rounded-md w-fit cursor-pointer hover:text-amber-600 hover:border-amber-600 text-lg">
+                        <div role="button" className="flex flex-row items-center border-2 border-black gap-2 p-1 rounded-md w-fit cursor-pointer hover:text-amber-600 hover:border-amber-600 active:text-amber-600 active:border-amber-600 text-lg">
                             <FontAwesomeIcon icon={faBookmark} />
                             <p className="font-bold">Save Recipe</p>
                         </div>

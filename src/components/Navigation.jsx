@@ -13,7 +13,6 @@ const Navigation = () => {
                     <Link to="/?category=Beef&page=1" className={`cursor-pointer ${location.pathname === "/" ? "text-white" : "text-black" }`}>Home</Link>
                     <span className="border-1 md:border-0 w-full md:w-auto"></span>
                     <Link to="/favourite" className={`cursor-pointer ${location.pathname === "/favourite" ? "text-white" : "text-black" }`}>Favourites</Link>
-                    <span className="border-1 md:border-0 w-full md:w-auto"></span>
                 </ul>
             </div>
         </>
