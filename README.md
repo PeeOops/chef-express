@@ -1,46 +1,83 @@
-# 🍽️ ChefExpress
+# 🍽️ ChefExpress — Recipe Finder App - PeeDegrees
 
-A modern, responsive React app to explore and discover meals using [TheMealDB API](https://www.themealdb.com/). Filter by category, search recipes, view detailed ingredients, and instructions — all with a sleek UI.
+A personal React.js portfolio project to explore, search, and save your favorite meals. Built using the [TheMealDB API](https://www.themealdb.com/), this app allows users to:
 
-## 📷 Screenshots
+- Browse recipes by category
+- Search for meals by name
+- View meal details, ingredients, and cooking instructions
+- Save favorite meals to local storage
+- Remove saved recipes
+- Navigate with pagination
+- Experience responsive design across all devices
 
-Coming Soon
+---
 
-## 🔗 Live Demo
+## 🛠️ Tech Stack
 
-Coming Soon
+- **React.js** (with hooks)
+- **React Router** for navigation
+- **Tailwind CSS** for styling
+- **Font Awesome** for icons
+- **TheMealDB API** for recipe data
+- **Local Storage** to persist favorites
+
+---
+
+## 📸 Screenshots
+
+### Homepage with Category Filters (Web)
+![Home](public/screenshots/web/home.png)
+
+### Recipe Detail Page
+![Details](public/screenshots/web/fooddetails.png)
+
+### Favorites Page
+![Favorites](public/screenshots/web/favourite.png)
+
+---
 
 ## ✨ Features
 
-- 🔍 **Search recipes** by name
-- 📂 **Filter by category** (Beef, Chicken, Vegetarian, etc.)
-- 📄 **Paginated recipe lists**
-- 🧾 **Detailed meal pages** with:
-  - Ingredients & measurements
-  - Step-by-step instructions
-  - Cuisine, tags, YouTube tutorial
-- 📱 **Responsive design** (mobile-first)
-- 💾 Bookmark button placeholder (upcoming)
+- 📚 **Browse Meals by Category**  
+  Filter meals by categories like Beef, Chicken, Vegan, etc.
 
-## 🚀 Tech Stack
+- 🔍 **Search Meals**  
+  Search for meals by name using the built-in search bar.
 
-- ⚛️ **React**
-- 🌐 **React Router DOM**
-- 🧠 **TheMealDB API**
-- 💅 **Tailwind CSS**
+- 🍳 **View Details**  
+  Get detailed info including ingredients, instructions, and a YouTube cooking video.
 
-## 📦 Installation
+- 💾 **Save Favorites**  
+  Save your favorite meals using local storage.
 
-```bash
-# Clone the repository
-git clone https://github.com/PeeOops/chef-express.git
+- 🗑️ **Delete Favorites**  
+  Remove saved meals individually from your favorites.
 
-# Navigate into the project folder
-cd chef-express
+- 📱 **Responsive Design**  
+  Adapts to mobile, tablet, and desktop layouts.
 
-# Install dependencies
-npm install
+---
 
-# Start the development server
-npm run dev
-```
+## 🔧 Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/meal-explorer.git
+   cd meal-explorer
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in browser**
+   ```bash
+   Visit http://localhost:3000 or the port shown in terminal.
+   ``` 
+
